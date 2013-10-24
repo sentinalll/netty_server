@@ -14,13 +14,11 @@ import io.netty.handler.codec.http.QueryStringDecoder;
 public class NettyHttpResponseHandler {
 
     public static FullHttpResponse getResponse(String className, QueryStringDecoder qsd) {
-        System.out.println("className : " + className);
         if (className.equals("hello")) {
            
             return new HelloHttpResponse().getResponse();
         }
         if (className.equals("redirect")) {
-             System.out.println("URL 4" );
             return new RedirectHttpResponse().getResponse(qsd);
         }
         if (className.equals("status")) {

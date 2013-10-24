@@ -36,20 +36,21 @@ class NettyHttpSendResponseHandlerFactory {
     void sendResponse() {
         String uri = request.getUri();
         String[] segments = uri.split("[\\/\\?]");
-
-        String className = segments[1];
+        String className = "";
+        if (segments.length != 0) {
+            className = segments[1];
+        }
         QueryStringDecoder queryStringDecoder = new QueryStringDecoder(request.getUri());
         keepAlive = isKeepAlive(request);
-        System.out.println("3");
 
         FullHttpResponse response = NettyHttpResponseHandler.getResponse(className, queryStringDecoder);
         ID = Integer.parseInt(request.headers().get("ID"));
-        Info.setSendBytes(ID,response.content().array().length + response.headers().entries().toString().getBytes().length);
+        Info.setSendBytes(ID, response.content().array().length + response.headers().entries().toString().getBytes().length);
         writeResponse(response, className);
     }
 
     private void writeResponse(final FullHttpResponse response, String className) {
-        
+
         if (className.equals("hello")) {
             final EventLoop loop = ctx.channel().eventLoop();
             loop.schedule(new Runnable() {

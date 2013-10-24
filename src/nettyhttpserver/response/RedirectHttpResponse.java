@@ -19,10 +19,9 @@ import java.util.List;
  */
 class RedirectHttpResponse {
 
-       public FullHttpResponse getResponse(QueryStringDecoder qsd) {
+    public FullHttpResponse getResponse(QueryStringDecoder qsd) {
         List<String> url = qsd.parameters().get("url");
-       System.out.println("5" +url.get(0));
-       Info.redirectCount(url.get(0));
+        Info.redirectCount(url.get(0));
         FullHttpResponse response = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.MOVED_PERMANENTLY);
         response.headers().set(LOCATION, url.get(0));
         return response;

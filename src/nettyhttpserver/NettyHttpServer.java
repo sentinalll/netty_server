@@ -47,7 +47,7 @@ public class NettyHttpServer {
         if (args.length > 0) {
             port = Integer.parseInt(args[0]);
         } else {
-            port = 80;
+            port = 8080;
         }
         new NettyHttpServer(port).run();
     }

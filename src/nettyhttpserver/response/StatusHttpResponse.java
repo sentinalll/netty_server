@@ -39,38 +39,35 @@ class StatusHttpResponse {
 
     FullHttpResponse getResponse() {
         FullHttpResponse response = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.OK);
-        buf.append("Request Count : " + Info.getRequestCount() + "\r\n");
-        buf.append("Request Unique Count : " + Info.getCountUniqueRequest() + "\r\n");
-        buf.append("Active channel : " + Info.getChannelCount() + "\r\n");
-
-
+        buf.append("Request Count : " + Info.getRequestCount() + "\n");
+        buf.append("Request Unique Count : " + Info.getCountUniqueRequest() + "\n");
+        buf.append("Active channel : " + Info.getChannelCount() + "\n");
 
         HashMap<String, Integer> requestCountForAllIp = Info.getRequestCountForAllIp();
         HashMap<String, Long> timeStampIP = Info.getRequestTimeStampForAllIp();
         Set<String> Ip = requestCountForAllIp.keySet();
-        buf.append("Ip                  |count_connection  |  timestamp \r\n");
+        buf.append("Ip, count_connection, timestamp\n");
         for (String ip : Ip) {
-            buf.append(ip + "            " + requestCountForAllIp.get(ip) + "         " + timeStampIP.get(ip) + "\r\n");
+            buf.append(ip + ", " + requestCountForAllIp.get(ip) + ", " + timeStampIP.get(ip) + "\n");
         }
         Set<String> url = Info.getRedirectCountForAllUrl().keySet();
-        buf.append("\r\nRedirect URL \r\n");
-        buf.append("count|     URL \r\n");
-        System.out.println("URL | " + url.toString());
+        buf.append("\nRedirect URL\n");
+        buf.append("count, URL\n");
         for (String u : url) {
-            buf.append(Info.getRedirectCountForAllUrl().get(u) + "    | " + u + "\r\n");
+            buf.append(Info.getRedirectCountForAllUrl().get(u) + ", " + u + "\n");
         }
 
         Set<Integer> ID = Info.getAllID();
-        buf.append("\r\nscr_IP              | received_bytes | timestamp    |   send_bytes | URL \r\n");
+        buf.append("\nsrc_IP, received_bytes, timestamp, send_bytes, URL\n");
         for (Integer i : ID) {
             if (i > 16) {
                 break;
             }
-            buf.append(Info.getIpAddressById(i) + "  "
-                    + Info.getRecievedBytes(i) + "               "
-                    + Info.getTimeStampbyID(i) + "  "
-                    + Info.getSendBytes(i) + "            "
-                    + Info.getURLbyID(i) + "\r\n");
+            buf.append(Info.getIpAddressById(i) + ", "
+                    + Info.getRecievedBytes(i) + ", "
+                    + Info.getTimeStampbyID(i) + ", "
+                    + Info.getSendBytes(i) + ", "
+                    + Info.getURLbyID(i) + "\n");
         }
 
         response.content().writeBytes(str_to_bt(buf.toString()));

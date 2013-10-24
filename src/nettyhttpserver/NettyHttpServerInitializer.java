@@ -17,9 +17,6 @@ import io.netty.handler.codec.http.HttpServerCodec;
     @Override
     public void initChannel(SocketChannel ch) throws Exception {
         ChannelPipeline p = ch.pipeline();
-        System.out.println("1" );
-       
-        
         p.addLast("codec", new HttpServerCodec());
         p.addLast("handler", new NettyHttpServerHandler());
     }

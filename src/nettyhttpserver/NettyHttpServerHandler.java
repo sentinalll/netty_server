@@ -47,7 +47,6 @@ public class NettyHttpServerHandler extends ChannelInboundHandlerAdapter {
             } else {
                 ID = 0;
             }
-            System.out.println("2");
 
 
             new NettyHttpSendResponseHandlerFactory(ctx, request).sendResponse();
